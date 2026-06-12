@@ -219,10 +219,18 @@ function Editor() {
         <div className="overflow-auto">
           <div className="bg-stone-200/60 rounded-xl p-4 inline-block min-w-full">
             <div className="origin-top mx-auto shadow-2xl" style={{ width: 794 }}>
-              <div ref={previewRef} dir="rtl" style={{ fontFamily: "'Cairo', 'Tajawal', system-ui, sans-serif" }}>
-                <CVPreview cv={cv} />
-              </div>
-            </div>
+  <div
+    ref={previewRef}
+    dir="rtl"
+    style={{
+      backgroundColor: "#ffffff",
+      color: "#000000",
+      fontFamily: "'Cairo', 'Tajawal', system-ui, sans-serif",
+    }}
+  >
+    <CVPreview cv={cv} />
+  </div>
+</div>
           </div>
         </div>
       </div>

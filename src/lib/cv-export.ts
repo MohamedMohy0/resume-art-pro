@@ -6,36 +6,39 @@ import { jsPDF } from "jspdf";
  * Uses html2canvas so Arabic text is preserved as rendered pixels — no font embedding needed.
  */
 export async function exportElementToPdf(el: HTMLElement, filename = "cv.pdf") {
-  // Render at high DPI for crisp output
+  await document.fonts.ready;
+  await new Promise((r) => setTimeout(r, 500));
+
   const canvas = await html2canvas(el, {
-    scale: 2,
-    useCORS: true,
-    backgroundColor: "#ffffff",
-    windowWidth: el.scrollWidth,
-    windowHeight: el.scrollHeight,
-  });
+  scale: 2,
+  useCORS: true,
+  backgroundColor: "#ffffff",
 
-  const pdf = new jsPDF({ orientation: "portrait", unit: "mm", format: "a4" });
-  const pageW = pdf.internal.pageSize.getWidth();
-  const pageH = pdf.internal.pageSize.getHeight();
+  onclone: (document) => {
+    const style = document.createElement("style");
 
-  const imgW = pageW;
-  const imgH = (canvas.height * imgW) / canvas.width;
+    style.innerHTML = `
+      * {
+        color: rgb(0,0,0) !important;
+        border-color: rgb(220,220,220) !important;
+      }
 
-  let heightLeft = imgH;
-  let position = 0;
+      body {
+        background: white !important;
+      }
+    `;
 
-  const imgData = canvas.toDataURL("image/jpeg", 0.95);
-
-  pdf.addImage(imgData, "JPEG", 0, position, imgW, imgH);
-  heightLeft -= pageH;
-
-  while (heightLeft > 0) {
-    position = heightLeft - imgH;
-    pdf.addPage();
-    pdf.addImage(imgData, "JPEG", 0, position, imgW, imgH);
-    heightLeft -= pageH;
+    document.head.appendChild(style);
   }
+});
 
+  const pdf = new jsPDF("p", "mm", "a4");
+
+  const imgWidth = 210;
+  const imgHeight = (canvas.height * imgWidth) / canvas.width;
+
+  const imgData = canvas.toDataURL("image/jpeg", 1.0);
+
+  pdf.addImage(imgData, "JPEG", 0, 0, imgWidth, imgHeight);
   pdf.save(filename);
 }
