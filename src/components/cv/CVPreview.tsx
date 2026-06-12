@@ -256,11 +256,8 @@ export function CVPreview({ cv }: Props) {
         <h1 className="text-5xl font-black text-white">{cv.personal.fullName}</h1>
         <div className="text-lg text-white/90 mt-2">{cv.personal.jobTitle}</div>
       </div>
-      <div className="px-10 py-3 bg-stone-900 text-white text-[12px] flex flex-wrap gap-x-5">
-        {cv.personal.email && <span>{cv.personal.email}</span>}
-        {cv.personal.phone && <span dir="ltr">{cv.personal.phone}</span>}
-        {cv.personal.location && <span>{cv.personal.location}</span>}
-        {cv.personal.website && <span dir="ltr">{cv.personal.website}</span>}
+      <div className="px-10 py-3 bg-stone-900 text-white text-[12px] flex flex-wrap gap-x-5 gap-y-1">
+        <ContactList p={cv.personal} />
       </div>
       <div className="p-8 space-y-5">
         {cv.sections.map((s) => (
