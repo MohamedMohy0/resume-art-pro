@@ -1,4 +1,26 @@
 import type { CV, CVSection } from "@/lib/cv-types";
+import { Mail, Phone, MapPin, Globe } from "lucide-react";
+
+function ContactList({ p, className = "", iconColor }: { p: CV["personal"]; className?: string; iconColor?: string }) {
+  const items: { icon: typeof Mail; value: string; ltr?: boolean }[] = [];
+  if (p.email) items.push({ icon: Mail, value: p.email, ltr: true });
+  if (p.phone) items.push({ icon: Phone, value: p.phone, ltr: true });
+  if (p.location) items.push({ icon: MapPin, value: p.location });
+  if (p.website) items.push({ icon: Globe, value: p.website, ltr: true });
+  return (
+    <>
+      {items.map((it, i) => {
+        const Icon = it.icon;
+        return (
+          <span key={i} className={`inline-flex items-center gap-1.5 ${className}`}>
+            <Icon className="size-3.5 shrink-0" style={{ color: iconColor ?? "currentColor" }} strokeWidth={1.75} />
+            <span dir={it.ltr ? "ltr" : undefined}>{it.value}</span>
+          </span>
+        );
+      })}
+    </>
+  );
+}
 
 interface Props {
   cv: CV;
@@ -76,11 +98,8 @@ function PersonalHeader({ cv, variant }: { cv: CV; variant: "block" | "side" | "
           <div>
             <h1 className="text-3xl font-extrabold tracking-tight">{p.fullName}</h1>
             <div className="text-base opacity-90 mt-1">{p.jobTitle}</div>
-            <div className="text-xs opacity-80 mt-2 flex flex-wrap gap-x-4 gap-y-0.5">
-              {p.email && <span>{p.email}</span>}
-              {p.phone && <span dir="ltr">{p.phone}</span>}
-              {p.location && <span>{p.location}</span>}
-              {p.website && <span dir="ltr">{p.website}</span>}
+            <div className="text-xs opacity-90 mt-2 flex flex-wrap gap-x-4 gap-y-1">
+              <ContactList p={p} />
             </div>
           </div>
         </div>
@@ -92,11 +111,8 @@ function PersonalHeader({ cv, variant }: { cv: CV; variant: "block" | "side" | "
       <div className="px-10 pt-10 pb-6 border-b border-stone-200">
         <h1 className="text-3xl font-bold text-stone-900">{p.fullName}</h1>
         <div className="text-sm text-stone-600 mt-1">{p.jobTitle}</div>
-        <div className="text-[11px] text-stone-500 mt-3 flex flex-wrap gap-x-4">
-          {p.email && <span>{p.email}</span>}
-          {p.phone && <span dir="ltr">{p.phone}</span>}
-          {p.location && <span>{p.location}</span>}
-          {p.website && <span dir="ltr">{p.website}</span>}
+        <div className="text-[11px] text-stone-500 mt-3 flex flex-wrap gap-x-4 gap-y-1">
+          <ContactList p={p} />
         </div>
       </div>
     );
@@ -108,11 +124,8 @@ function PersonalHeader({ cv, variant }: { cv: CV; variant: "block" | "side" | "
       {p.photo && <img src={p.photo} alt="" className="size-24 rounded-full object-cover mx-auto mb-3" />}
       <h1 className="text-3xl font-bold" style={{ color: c }}>{p.fullName}</h1>
       <div className="text-sm text-stone-600 mt-1">{p.jobTitle}</div>
-      <div className="text-[11px] text-stone-500 mt-3 flex flex-wrap justify-center gap-x-4">
-        {p.email && <span>{p.email}</span>}
-        {p.phone && <span dir="ltr">{p.phone}</span>}
-        {p.location && <span>{p.location}</span>}
-        {p.website && <span dir="ltr">{p.website}</span>}
+      <div className="text-[11px] text-stone-500 mt-3 flex flex-wrap justify-center gap-x-4 gap-y-1">
+        <ContactList p={p} />
       </div>
     </div>
   );
@@ -158,11 +171,8 @@ export function CVPreview({ cv }: Props) {
           <h1 className="text-2xl font-extrabold text-center">{cv.personal.fullName}</h1>
           <div className="text-sm text-center opacity-90 mt-1 mb-6">{cv.personal.jobTitle}</div>
 
-          <div className="space-y-1 text-[12px] opacity-95">
-            {cv.personal.email && <div>📧 {cv.personal.email}</div>}
-            {cv.personal.phone && <div dir="ltr" className="text-right">📱 {cv.personal.phone}</div>}
-            {cv.personal.location && <div>📍 {cv.personal.location}</div>}
-            {cv.personal.website && <div dir="ltr" className="text-right">🌐 {cv.personal.website}</div>}
+          <div className="space-y-1.5 text-[12px] opacity-95 flex flex-col items-start">
+            <ContactList p={cv.personal} />
           </div>
 
           <div className="mt-6 space-y-5">
@@ -246,11 +256,8 @@ export function CVPreview({ cv }: Props) {
         <h1 className="text-5xl font-black text-white">{cv.personal.fullName}</h1>
         <div className="text-lg text-white/90 mt-2">{cv.personal.jobTitle}</div>
       </div>
-      <div className="px-10 py-3 bg-stone-900 text-white text-[12px] flex flex-wrap gap-x-5">
-        {cv.personal.email && <span>{cv.personal.email}</span>}
-        {cv.personal.phone && <span dir="ltr">{cv.personal.phone}</span>}
-        {cv.personal.location && <span>{cv.personal.location}</span>}
-        {cv.personal.website && <span dir="ltr">{cv.personal.website}</span>}
+      <div className="px-10 py-3 bg-stone-900 text-white text-[12px] flex flex-wrap gap-x-5 gap-y-1">
+        <ContactList p={cv.personal} />
       </div>
       <div className="p-8 space-y-5">
         {cv.sections.map((s) => (
