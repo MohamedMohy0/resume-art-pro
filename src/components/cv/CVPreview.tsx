@@ -180,11 +180,8 @@ export function CVPreview({ cv }: Props) {
           <h1 className="text-2xl font-extrabold text-center">{cv.personal.fullName}</h1>
           <div className="text-sm text-center opacity-90 mt-1 mb-6">{cv.personal.jobTitle}</div>
 
-          <div className="space-y-1 text-[12px] opacity-95">
-            {cv.personal.email && <div>📧 {cv.personal.email}</div>}
-            {cv.personal.phone && <div dir="ltr" className="text-right">📱 {cv.personal.phone}</div>}
-            {cv.personal.location && <div>📍 {cv.personal.location}</div>}
-            {cv.personal.website && <div dir="ltr" className="text-right">🌐 {cv.personal.website}</div>}
+          <div className="space-y-1.5 text-[12px] opacity-95 flex flex-col items-start">
+            <ContactList p={cv.personal} />
           </div>
 
           <div className="mt-6 space-y-5">
