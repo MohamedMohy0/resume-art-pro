@@ -1,4 +1,26 @@
 import type { CV, CVSection } from "@/lib/cv-types";
+import { Mail, Phone, MapPin, Globe } from "lucide-react";
+
+function ContactList({ p, className = "", iconColor }: { p: CV["personal"]; className?: string; iconColor?: string }) {
+  const items: { icon: typeof Mail; value: string; ltr?: boolean }[] = [];
+  if (p.email) items.push({ icon: Mail, value: p.email, ltr: true });
+  if (p.phone) items.push({ icon: Phone, value: p.phone, ltr: true });
+  if (p.location) items.push({ icon: MapPin, value: p.location });
+  if (p.website) items.push({ icon: Globe, value: p.website, ltr: true });
+  return (
+    <>
+      {items.map((it, i) => {
+        const Icon = it.icon;
+        return (
+          <span key={i} className={`inline-flex items-center gap-1.5 ${className}`}>
+            <Icon className="size-3.5 shrink-0" style={{ color: iconColor ?? "currentColor" }} strokeWidth={1.75} />
+            <span dir={it.ltr ? "ltr" : undefined}>{it.value}</span>
+          </span>
+        );
+      })}
+    </>
+  );
+}
 
 interface Props {
   cv: CV;
