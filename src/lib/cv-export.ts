@@ -26,11 +26,26 @@ ${styleTags}
   @page { size: A4; margin: 0; }
   html, body { margin: 0; padding: 0; background: #fff; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
   body { font-family: 'Cairo','Tajawal',system-ui,sans-serif; }
-  .cv-print-root { width: 210mm; min-height: 297mm; }
-  .cv-print-root > * { width: 100% !important; }
-  @media print {
-    body { margin: 0; }
+  .cv-print-root {
+    width: 210mm;
+    height: 297mm;
+    overflow: hidden;
+    page-break-after: avoid;
+    page-break-inside: avoid;
+    break-after: avoid;
+    break-inside: avoid;
   }
+  /* Force the inner CV to exactly fill one A4 page (no min-height overflow). */
+  .cv-print-root > * {
+    width: 210mm !important;
+    height: 297mm !important;
+    min-height: 0 !important;
+    max-height: 297mm !important;
+    overflow: hidden !important;
+    box-sizing: border-box !important;
+  }
+  .cv-print-root, .cv-print-root * { page-break-inside: avoid; break-inside: avoid; }
+  @media print { body { margin: 0; } }
 </style>
 </head>
 <body>
