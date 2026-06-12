@@ -98,11 +98,8 @@ function PersonalHeader({ cv, variant }: { cv: CV; variant: "block" | "side" | "
           <div>
             <h1 className="text-3xl font-extrabold tracking-tight">{p.fullName}</h1>
             <div className="text-base opacity-90 mt-1">{p.jobTitle}</div>
-            <div className="text-xs opacity-80 mt-2 flex flex-wrap gap-x-4 gap-y-0.5">
-              {p.email && <span>{p.email}</span>}
-              {p.phone && <span dir="ltr">{p.phone}</span>}
-              {p.location && <span>{p.location}</span>}
-              {p.website && <span dir="ltr">{p.website}</span>}
+            <div className="text-xs opacity-90 mt-2 flex flex-wrap gap-x-4 gap-y-1">
+              <ContactList p={p} />
             </div>
           </div>
         </div>
@@ -114,11 +111,8 @@ function PersonalHeader({ cv, variant }: { cv: CV; variant: "block" | "side" | "
       <div className="px-10 pt-10 pb-6 border-b border-stone-200">
         <h1 className="text-3xl font-bold text-stone-900">{p.fullName}</h1>
         <div className="text-sm text-stone-600 mt-1">{p.jobTitle}</div>
-        <div className="text-[11px] text-stone-500 mt-3 flex flex-wrap gap-x-4">
-          {p.email && <span>{p.email}</span>}
-          {p.phone && <span dir="ltr">{p.phone}</span>}
-          {p.location && <span>{p.location}</span>}
-          {p.website && <span dir="ltr">{p.website}</span>}
+        <div className="text-[11px] text-stone-500 mt-3 flex flex-wrap gap-x-4 gap-y-1">
+          <ContactList p={p} />
         </div>
       </div>
     );
@@ -130,11 +124,8 @@ function PersonalHeader({ cv, variant }: { cv: CV; variant: "block" | "side" | "
       {p.photo && <img src={p.photo} alt="" className="size-24 rounded-full object-cover mx-auto mb-3" />}
       <h1 className="text-3xl font-bold" style={{ color: c }}>{p.fullName}</h1>
       <div className="text-sm text-stone-600 mt-1">{p.jobTitle}</div>
-      <div className="text-[11px] text-stone-500 mt-3 flex flex-wrap justify-center gap-x-4">
-        {p.email && <span>{p.email}</span>}
-        {p.phone && <span dir="ltr">{p.phone}</span>}
-        {p.location && <span>{p.location}</span>}
-        {p.website && <span dir="ltr">{p.website}</span>}
+      <div className="text-[11px] text-stone-500 mt-3 flex flex-wrap justify-center gap-x-4 gap-y-1">
+        <ContactList p={p} />
       </div>
     </div>
   );
